@@ -5,6 +5,8 @@ import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
 import data from './data.json'
+import { refUpdater } from '../../../../src/components/checkbox'
+import MUICheckbox from '@material-ui/core/Checkbox'
 
 class WithOptions extends PureComponent {
   constructor(props) {
@@ -124,10 +126,33 @@ class WithOptions extends PureComponent {
             readOnly={readOnly}
             showDropdown={showDropdown}
             texts={{ label: 'Demo Dropdown' }}
+            components={{ Checkbox: CustomCheckbox }}
           />
         </div>
       </div>
     )
   }
 }
+
+class CustomCheckbox extends React.Component {
+  render() {
+    const { checked, indeterminate = false, onChange, disabled, readOnly, ...rest } = this.props
+
+    const isDisabled = disabled || readOnly
+
+    return (
+      <MUICheckbox
+        checked={checked}
+        onChange={this.handleChange}
+        disabled={isDisabled}
+        innerRef={refUpdater({ checked, indeterminate })}
+        {...rest}
+      />
+    )
+  }
+  handleChange = e => {
+    this.props.onChange(e)
+  }
+}
+
 export default WithOptions

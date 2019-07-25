@@ -1,29 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames/bind'
-import Tag from '../tag'
 import styles from './index.css'
-import { getDataset, debounce } from '../utils'
-import { getAriaLabel } from '../a11y'
+import { debounce } from '../../utils'
+import { getAriaLabel } from '../../a11y'
 
 const cx = cn.bind(styles)
-
-const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
-  tags.map(tag => {
-    const { _id, label, tagClassName, dataset } = tag
-    return (
-      <li className={cx('tag-item', tagClassName)} key={`tag-item-${_id}`} {...getDataset(dataset)}>
-        <Tag
-          label={label}
-          id={_id}
-          onDelete={onDelete}
-          readOnly={readOnly}
-          disabled={disabled}
-          labelRemove={labelRemove}
-        />
-      </li>
-    )
-  })
 
 class Input extends PureComponent {
   static propTypes = {
@@ -38,6 +20,9 @@ class Input extends PureComponent {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     activeDescendant: PropTypes.string,
+    Tag: PropTypes.func,
+    TagsWrapper: PropTypes.func,
+    TagDeleteIcon: PropTypes.func,
   }
 
   constructor(props) {
@@ -62,11 +47,22 @@ class Input extends PureComponent {
       readOnly,
       onKeyDown,
       activeDescendant,
+      Tag,
+      TagDeleteIcon,
+      TagsWrapper,
     } = this.props
 
     return (
       <ul className={cx('tag-list')}>
-        {getTags(tags, onTagRemove, readOnly, disabled, texts.labelRemove)}
+        <TagsWrapper
+          tags={tags}
+          onDelete={onTagRemove}
+          readOnly={readOnly}
+          disabled={disabled}
+          labelRemove={texts.labelRemove}
+          Tag={Tag}
+          TagDeleteIcon={TagDeleteIcon}
+        />
         <li className={cx('tag-item')}>
           <input
             type="text"

@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames/bind'
 
-import { getAriaLabel } from '../a11y'
+import { getAriaLabel } from '../../a11y'
 import { getTagId } from '../tag'
 
-import styles from '../index.css'
+import styles from '../../index.css'
 
 const cx = cn.bind(styles)
 

@@ -2,9 +2,9 @@ import cn from 'classnames/bind'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import { getDataset, isEmpty } from '../utils'
+import { getDataset, isEmpty } from '../../utils'
 import Actions from './actions'
-import NodeLabel from './node-label'
+// import NodeLabel from './node-label'
 import Toggle from './toggle'
 
 import styles from './index.css'
@@ -73,6 +73,9 @@ class TreeNode extends PureComponent {
     showPartiallySelected: PropTypes.bool,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
+    NodeLabel: PropTypes.func,
+    Checkbox: PropTypes.func,
+    Radio: PropTypes.func,
   }
 
   getAriaAttributes = () => {
@@ -113,14 +116,14 @@ class TreeNode extends PureComponent {
       showPartiallySelected,
       readOnly,
       clientId,
+      NodeLabel,
+      Checkbox,
+      Radio,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 20}px` } : {}
-
-    const liId = `${_id}_li`
-
     return (
-      <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
+      <li className={liCx} style={style} id={`${_id}_li`} {...getDataset(dataset)} {...this.getAriaAttributes()}>
         <Toggle isLeaf={isLeaf(_children)} expanded={expanded} id={_id} onNodeToggle={onNodeToggle} />
         <NodeLabel
           title={title}
@@ -135,6 +138,8 @@ class TreeNode extends PureComponent {
           showPartiallySelected={showPartiallySelected}
           readOnly={readOnly}
           clientId={clientId}
+          Checkbox={Checkbox}
+          Radio={Radio}
         />
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
       </li>

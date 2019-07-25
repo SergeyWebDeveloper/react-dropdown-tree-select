@@ -11,14 +11,19 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { isOutsideClick, clientIdGenerator } from './utils'
-import Input from './input'
-import Trigger from './trigger'
-import Tree from './tree'
+// import Input from './input'
+// import Trigger from './trigger'
+// import Tree from './tree'
 import TreeManager from './tree-manager'
 import keyboardNavigation from './tree-manager/keyboardNavigation'
 
 import styles from './index.css'
 import { getAriaLabel } from './a11y'
+import { components } from './components'
+import Input from './components/input'
+import Trigger from './components/trigger'
+import Tree from './components/tree'
+import TreeNode from './components/tree-node'
 
 const cx = cn.bind(styles)
 
@@ -48,6 +53,18 @@ class DropdownTreeSelect extends Component {
     readOnly: PropTypes.bool,
     id: PropTypes.string,
     searchPredicate: PropTypes.func,
+    components: PropTypes.shape({
+      Input: PropTypes.func,
+      Trigger: PropTypes.func,
+      Tree: PropTypes.func,
+      Tag: PropTypes.func,
+      Tags: PropTypes.func,
+      TagDeleteIcon: PropTypes.func,
+      TreeNode: PropTypes.func,
+      NodeLabel: PropTypes.func,
+      Checkbox: PropTypes.func,
+      Radio: PropTypes.func,
+    }),
   }
 
   static defaultProps = {
@@ -56,6 +73,7 @@ class DropdownTreeSelect extends Component {
     onChange: () => {},
     texts: {},
     showDropdown: 'default',
+    components: {},
   }
 
   constructor(props) {
@@ -63,6 +81,9 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
+    }
+    this.components = {
+      ...components(props.components),
     }
     this.clientId = props.id || clientIdGenerator.get(this)
   }
@@ -282,7 +303,18 @@ class DropdownTreeSelect extends Component {
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
-
+    const {
+      Input,
+      Trigger,
+      Tree,
+      Tag,
+      TagDeleteIcon,
+      Tags: TagsWrapper,
+      TreeNode,
+      NodeLabel,
+      Checkbox,
+      Radio,
+    } = this.components
     return (
       <div
         id={this.clientId}
@@ -309,6 +341,9 @@ class DropdownTreeSelect extends Component {
               onBlur={this.onInputBlur}
               onTagRemove={this.onTagRemove}
               onKeyDown={this.onKeyboardKeyDown}
+              Tag={Tag}
+              TagsWrapper={TagsWrapper}
+              TagDeleteIcon={TagDeleteIcon}
               {...commonProps}
             />
           </Trigger>
@@ -327,6 +362,10 @@ class DropdownTreeSelect extends Component {
                   onNodeToggle={this.onNodeToggle}
                   mode={mode}
                   showPartiallySelected={this.props.showPartiallySelected}
+                  TreeNode={TreeNode}
+                  NodeLabel={NodeLabel}
+                  Checkbox={Checkbox}
+                  Radio={Radio}
                   {...commonProps}
                 />
               )}

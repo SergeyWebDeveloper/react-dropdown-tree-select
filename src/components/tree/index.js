@@ -1,8 +1,6 @@
+import React, { Component } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-
-import TreeNode from '../tree-node'
 
 const shouldRenderNode = (node, searchModeOn, data) => {
   if (searchModeOn || node.expanded) return true
@@ -29,6 +27,10 @@ class Tree extends Component {
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
     activeDescendant: PropTypes.string,
+    TreeNode: PropTypes.func,
+    NodeLabel: PropTypes.func,
+    Checkbox: PropTypes.func,
+    Radio: PropTypes.func,
   }
 
   static defaultProps = {
@@ -89,6 +91,10 @@ class Tree extends Component {
       onNodeToggle,
       activeDescendant,
       clientId,
+      TreeNode,
+      NodeLabel,
+      Checkbox,
+      Radio,
     } = props
     const items = []
     data.forEach(node => {
@@ -109,6 +115,9 @@ class Tree extends Component {
             readOnly={readOnly}
             clientId={clientId}
             activeDescendant={activeDescendant}
+            NodeLabel={NodeLabel}
+            Checkbox={Checkbox}
+            Radio={Radio}
           />
         )
       }

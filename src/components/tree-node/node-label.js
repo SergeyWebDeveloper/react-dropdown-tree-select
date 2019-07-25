@@ -1,8 +1,6 @@
 import cn from 'classnames/bind'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Checkbox from '../checkbox'
-import RadioButton from '../radio'
 
 import styles from './index.css'
 
@@ -24,6 +22,8 @@ class NodeLabel extends PureComponent {
     onCheckboxChange: PropTypes.func,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
+    Checkbox: PropTypes.func,
+    Radio: PropTypes.func,
   }
 
   handleCheckboxChange = e => {
@@ -42,8 +42,21 @@ class NodeLabel extends PureComponent {
   }
 
   render() {
-    const { mode, title, label, id, partial, checked } = this.props
-    const { value, disabled, showPartiallySelected, readOnly, clientId } = this.props
+    const {
+      mode,
+      title,
+      label,
+      id,
+      partial,
+      checked,
+      value,
+      disabled,
+      showPartiallySelected,
+      readOnly,
+      clientId,
+      Checkbox,
+      Radio,
+    } = this.props
     const nodeLabelProps = { className: 'node-label' }
 
     // in case of simple select mode, there is no checkbox, so we need to handle the click via the node label
@@ -59,7 +72,7 @@ class NodeLabel extends PureComponent {
     return (
       <label title={title || label} htmlFor={id}>
         {mode === 'radioSelect' ? (
-          <RadioButton name={clientId} className="radio-item" onChange={this.handleCheckboxChange} {...sharedProps} />
+          <Radio name={clientId} className="radio-item" onChange={this.handleCheckboxChange} {...sharedProps} />
         ) : (
           <Checkbox
             name={id}
