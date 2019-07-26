@@ -8,8 +8,8 @@ import { getAriaLabel } from '../a11y'
 
 const cx = cn.bind(styles)
 
-const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
-  tags.map(tag => {
+const getTags = (listTags = [], onDelete, readOnly, disabled, labelRemove) =>
+  listTags.map(tag => {
     const { _id, label, tagClassName, dataset } = tag
     return (
       <li className={cx('tag-item', tagClassName)} key={`tag-item-${_id}`} {...getDataset(dataset)}>
@@ -27,7 +27,7 @@ const getTags = (tags = [], onDelete, readOnly, disabled, labelRemove) =>
 
 class Input extends PureComponent {
   static propTypes = {
-    tags: PropTypes.array,
+    listTags: PropTypes.array,
     texts: PropTypes.object,
     onInputChange: PropTypes.func,
     onFocus: PropTypes.func,
@@ -52,7 +52,7 @@ class Input extends PureComponent {
 
   render() {
     const {
-      tags,
+      listTags,
       onTagRemove,
       inputRef,
       texts = {},
@@ -66,7 +66,7 @@ class Input extends PureComponent {
 
     return (
       <ul className={cx('tag-list')}>
-        {getTags(tags, onTagRemove, readOnly, disabled, texts.labelRemove)}
+        {getTags(listTags, onTagRemove, readOnly, disabled, texts.labelRemove)}
         <li className={cx('tag-item')}>
           <input
             type="text"

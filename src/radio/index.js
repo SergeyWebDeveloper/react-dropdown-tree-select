@@ -1,12 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-export const refUpdater = ({ checked }) => input => {
-  if (input) {
-    input.checked = checked
-  }
-}
-
 class RadioButton extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -17,20 +11,8 @@ class RadioButton extends PureComponent {
   }
 
   render() {
-    const { name, checked, onChange, disabled, readOnly, ...rest } = this.props
-
-    const isDisabled = disabled || readOnly
-
-    return (
-      <input
-        type="radio"
-        name={name}
-        ref={refUpdater({ checked })}
-        onChange={onChange}
-        disabled={isDisabled}
-        {...rest}
-      />
-    )
+    const { checked, onRef, ...rest } = this.props
+    return <input checked={checked || false} type="radio" ref={onRef} {...rest} />
   }
 }
 

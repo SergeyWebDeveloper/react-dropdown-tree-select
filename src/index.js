@@ -19,6 +19,7 @@ import keyboardNavigation from './tree-manager/keyboardNavigation'
 
 import styles from './index.css'
 import { getAriaLabel } from './a11y'
+import { components } from './components'
 
 const cx = cn.bind(styles)
 
@@ -63,7 +64,9 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
+      tags: [],
     }
+    this.components = components(this.props.components)
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
@@ -277,7 +280,7 @@ class DropdownTreeSelect extends Component {
 
   render() {
     const { disabled, readOnly, mode, texts } = this.props
-    const { showDropdown, currentFocus, tags } = this.state
+    const { showDropdown, currentFocus, tags: listTags } = this.state
 
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
 
@@ -298,12 +301,12 @@ class DropdownTreeSelect extends Component {
             { 'radio-select': mode === 'radioSelect' }
           )}
         >
-          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={tags}>
+          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={listTags}>
             <Input
               inputRef={el => {
                 this.searchInput = el
               }}
-              tags={tags}
+              listTags={listTags}
               onInputChange={this.onInputChange}
               onFocus={this.onInputFocus}
               onBlur={this.onInputBlur}
