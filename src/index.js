@@ -11,19 +11,12 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { isOutsideClick, clientIdGenerator } from './utils'
-// import Input from './input'
-// import Trigger from './trigger'
-// import Tree from './tree'
 import TreeManager from './tree-manager'
 import keyboardNavigation from './tree-manager/keyboardNavigation'
 
 import styles from './index.css'
 import { getAriaLabel } from './a11y'
 import { components } from './components'
-import Input from './components/input'
-import Trigger from './components/trigger'
-import Tree from './components/tree'
-import TreeNode from './components/tree-node'
 
 const cx = cn.bind(styles)
 
@@ -54,16 +47,16 @@ class DropdownTreeSelect extends Component {
     id: PropTypes.string,
     searchPredicate: PropTypes.func,
     components: PropTypes.shape({
-      Input: PropTypes.func,
-      Trigger: PropTypes.func,
-      Tree: PropTypes.func,
-      Tag: PropTypes.func,
-      Tags: PropTypes.func,
-      TagDeleteIcon: PropTypes.func,
-      TreeNode: PropTypes.func,
-      NodeLabel: PropTypes.func,
-      Checkbox: PropTypes.func,
-      Radio: PropTypes.func,
+      Input: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Trigger: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tree: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tags: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     }),
   }
 

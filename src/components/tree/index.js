@@ -27,10 +27,10 @@ class Tree extends Component {
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
     activeDescendant: PropTypes.string,
-    TreeNode: PropTypes.func,
-    NodeLabel: PropTypes.func,
-    Checkbox: PropTypes.func,
-    Radio: PropTypes.func,
+    TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {

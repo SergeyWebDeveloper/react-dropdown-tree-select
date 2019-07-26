@@ -73,9 +73,9 @@ class TreeNode extends PureComponent {
     showPartiallySelected: PropTypes.bool,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
-    NodeLabel: PropTypes.func,
-    Checkbox: PropTypes.func,
-    Radio: PropTypes.func,
+    NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   getAriaAttributes = () => {

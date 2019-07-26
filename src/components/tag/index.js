@@ -16,7 +16,7 @@ class Tag extends PureComponent {
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
     labelRemove: PropTypes.string,
-    TagDeleteIcon: PropTypes.func,
+    TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   handleClick = e => {

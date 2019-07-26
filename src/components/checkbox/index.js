@@ -1,13 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-export const refUpdater = ({ checked, indeterminate }) => input => {
-  if (input) {
-    input.checked = checked
-    input.indeterminate = indeterminate
-  }
-}
-
 class Checkbox extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool,
@@ -15,22 +8,14 @@ class Checkbox extends PureComponent {
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
+    name: PropTypes.string,
+    value: PropTypes.string,
+    id: PropTypes.string,
   }
 
   render() {
-    const { checked, indeterminate = false, onChange, disabled, readOnly, ...rest } = this.props
-
-    const isDisabled = disabled || readOnly
-
-    return (
-      <input
-        type="checkbox"
-        ref={refUpdater({ checked, indeterminate })}
-        onChange={onChange}
-        disabled={isDisabled}
-        {...rest}
-      />
-    )
+    const { checked = false, onRef, readOnly, indeterminate, ...rest } = this.props
+    return <input checked={checked} type="checkbox" ref={onRef} {...rest} />
   }
 }
 

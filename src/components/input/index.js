@@ -20,9 +20,9 @@ class Input extends PureComponent {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     activeDescendant: PropTypes.string,
-    Tag: PropTypes.func,
-    TagsWrapper: PropTypes.func,
-    TagDeleteIcon: PropTypes.func,
+    Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TagsWrapper: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   constructor(props) {

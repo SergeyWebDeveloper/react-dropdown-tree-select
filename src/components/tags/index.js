@@ -29,8 +29,8 @@ Tags.propTypes = {
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   labelRemove: PropTypes.string,
-  Tag: PropTypes.func,
-  TagDeleteIcon: PropTypes.func,
+  Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   onDelete: PropTypes.func,
 }
 

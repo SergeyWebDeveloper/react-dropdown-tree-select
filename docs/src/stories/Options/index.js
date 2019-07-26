@@ -7,6 +7,7 @@ import './index.css'
 import data from './data.json'
 import { refUpdater } from '../../../../src/components/checkbox'
 import MUICheckbox from '@material-ui/core/Checkbox'
+import PropTypes from 'prop-types'
 
 class WithOptions extends PureComponent {
   constructor(props) {
@@ -126,7 +127,7 @@ class WithOptions extends PureComponent {
             readOnly={readOnly}
             showDropdown={showDropdown}
             texts={{ label: 'Demo Dropdown' }}
-            components={{ Checkbox: CustomCheckbox }}
+            // components={{ Checkbox: CustomCheckbox }}
           />
         </div>
       </div>
@@ -134,24 +135,23 @@ class WithOptions extends PureComponent {
   }
 }
 
+// const CustomCheckbox = ({ checked, indeterminate = false, onChange, ...rest }) => {
+//   console.log(rest)
+//   return (
+//     <MUICheckbox
+//       // inputRef={refUpdater({ checked, indeterminate })}
+//       onChange={onChange}
+//       checked={checked || false}
+//       {...rest}
+//     />
+//   )
+// }
+
 class CustomCheckbox extends React.Component {
   render() {
-    const { checked, indeterminate = false, onChange, disabled, readOnly, ...rest } = this.props
-
-    const isDisabled = disabled || readOnly
-
-    return (
-      <MUICheckbox
-        checked={checked}
-        onChange={this.handleChange}
-        disabled={isDisabled}
-        innerRef={refUpdater({ checked, indeterminate })}
-        {...rest}
-      />
-    )
-  }
-  handleChange = e => {
-    this.props.onChange(e)
+    const { checked, onRef, onChange, indeterminate, ...rest } = this.props
+    console.log(onRef)
+    return <MUICheckbox inputRef={onRef} onChange={onChange} checked={checked || false} {...rest} />
   }
 }
 
