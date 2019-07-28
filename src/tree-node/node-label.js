@@ -1,7 +1,8 @@
 import cn from 'classnames/bind'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Control from '../control'
+import Checkbox from '../checkbox'
+import Radio from '../radio'
 
 import styles from './index.css'
 
@@ -78,8 +79,7 @@ class NodeLabel extends PureComponent {
     return (
       <label title={title || label} htmlFor={id}>
         {mode === 'radioSelect' ? (
-          <Control
-            type="radio"
+          <Radio
             name={clientId}
             className="radio-item"
             onChange={this.handleCheckboxChange}
@@ -87,8 +87,7 @@ class NodeLabel extends PureComponent {
             {...sharedProps}
           />
         ) : (
-          <Control
-            type="checkbox"
+          <Checkbox
             name={id}
             className={cx('checkbox-item', { 'simple-select': mode === 'simpleSelect' })}
             indeterminate={indeterminate}

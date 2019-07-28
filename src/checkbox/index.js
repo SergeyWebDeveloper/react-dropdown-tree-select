@@ -1,19 +1,10 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import Control, { controlComponentDefaultProps } from '../control'
+import withTypeControl from '../hoc/withTypeControl'
 
-class Checkbox extends PureComponent {
-  static propTypes = {
-    checked: PropTypes.bool,
-    indeterminate: PropTypes.bool,
-    onChange: PropTypes.func,
-    disabled: PropTypes.bool,
-    readOnly: PropTypes.bool,
-  }
+const Checkbox = withTypeControl(Control, 'checkbox')
 
-  render() {
-    const { checked, indeterminate, readOnly, onRef, ...rest } = this.props
-    return <input type="checkbox" ref={onRef} {...rest} />
-  }
+Checkbox.propTypes = {
+  ...controlComponentDefaultProps,
 }
 
 export default Checkbox

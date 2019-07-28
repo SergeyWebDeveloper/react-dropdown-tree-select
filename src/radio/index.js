@@ -1,19 +1,10 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import Control, { controlComponentDefaultProps } from '../control'
+import withTypeControl from '../hoc/withTypeControl'
 
-class RadioButton extends PureComponent {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
-    disabled: PropTypes.bool,
-    readOnly: PropTypes.bool,
-  }
+const Radio = withTypeControl(Control, 'radio')
 
-  render() {
-    const { checked, onRef, ...rest } = this.props
-    return <input checked={checked || false} type="radio" ref={onRef} {...rest} />
-  }
+Radio.propTypes = {
+  ...controlComponentDefaultProps,
 }
 
-export default RadioButton
+export default Radio
