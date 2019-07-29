@@ -286,7 +286,17 @@ class DropdownTreeSelect extends Component {
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
 
-    const { Input, Tag, TagDeleteIcon, Tags, Checkbox, Radio, IconToggleTreeNode, NodeLabel } = this.components
+    const {
+      Input,
+      Tag,
+      TagDeleteIcon,
+      Tags,
+      Checkbox,
+      Radio,
+      IconToggleTreeNode,
+      NodeLabel,
+      TreeNode,
+    } = this.components
 
     return (
       <div
@@ -340,6 +350,7 @@ class DropdownTreeSelect extends Component {
                   Radio={Radio}
                   IconToggleTreeNode={IconToggleTreeNode}
                   NodeLabel={NodeLabel}
+                  TreeNode={TreeNode}
                   {...commonProps}
                 />
               )}

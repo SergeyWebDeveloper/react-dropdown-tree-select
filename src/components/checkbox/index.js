@@ -1,3 +1,4 @@
+import React from 'react'
 import Control, { controlComponentDefaultProps } from '../../control'
 import withTypeControl from '../../hoc/withTypeControl'
 
@@ -7,4 +8,4 @@ Checkbox.propTypes = {
   ...controlComponentDefaultProps,
 }
 
-export default Checkbox
+export default React.memo(Checkbox)

@@ -1,4 +1,9 @@
 import React, { PureComponent } from 'react'
+import MUICheckbox from '@material-ui/core/Checkbox'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import Checkbox from './Checkbox'
 import DropdownTreeSelect from '../../../../src'
@@ -124,10 +129,34 @@ class WithOptions extends PureComponent {
             readOnly={readOnly}
             showDropdown={showDropdown}
             texts={{ label: 'Demo Dropdown' }}
+            components={{
+              Checkbox: CustomCheckbox,
+              TreeNode,
+            }}
           />
         </div>
       </div>
     )
   }
 }
+
 export default WithOptions
+
+class CustomCheckbox extends React.PureComponent {
+  render() {
+    const { onRef, checked = false, ...other } = this.props
+    return <MUICheckbox inputRef={onRef} checked={checked} {...other} />
+  }
+}
+
+class TreeNode extends React.PureComponent {
+  render() {
+    const { children, className, style } = this.props
+
+    return (
+      <ExpansionPanel className={className} style={style} expanded={this.props['aria-expanded']}>
+        <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+      </ExpansionPanel>
+    )
+  }
+}

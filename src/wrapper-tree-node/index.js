@@ -54,7 +54,7 @@ const getNodeCx = props => {
   )
 }
 
-class TreeNode extends PureComponent {
+class WrapperTreeNode extends PureComponent {
   static propTypes = {
     _id: PropTypes.string.isRequired,
     _depth: PropTypes.number,
@@ -83,6 +83,7 @@ class TreeNode extends PureComponent {
     Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   getAriaAttributes = () => {
@@ -95,7 +96,7 @@ class TreeNode extends PureComponent {
     if (mode !== 'simpleSelect') {
       attributes['aria-checked'] = partial ? 'mixed' : checked
       attributes['aria-level'] = (_depth || 0) + 1
-      attributes['aria-expanded'] = _children && (expanded ? 'true' : 'false')
+      attributes['aria-expanded'] = _children && !!expanded
     }
     return attributes
   }
@@ -141,6 +142,7 @@ class TreeNode extends PureComponent {
       Radio,
       IconToggleTreeNode,
       NodeLabel,
+      TreeNode,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 20}px` } : {}
@@ -159,7 +161,15 @@ class TreeNode extends PureComponent {
       nodeLabelProps.onClick = this.handleCheckboxChange
     }
     return (
-      <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
+      <TreeNode
+        className={liCx}
+        style={style}
+        idNode={_id}
+        id={liId}
+        {...getDataset(dataset)}
+        {...this.getAriaAttributes()}
+        onNodeToggle={onNodeToggle}
+      >
         <Toggle
           isLeaf={isLeaf(_children)}
           expanded={expanded}
@@ -195,9 +205,9 @@ class TreeNode extends PureComponent {
           )}
         </NodeLabel>
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
-      </li>
+      </TreeNode>
     )
   }
 }
 
-export default TreeNode
+export default WrapperTreeNode

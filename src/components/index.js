@@ -6,6 +6,7 @@ import Checkbox from './checkbox'
 import Radio from './radio'
 import IconToggleTreeNode from './IconToggleTreeNode'
 import NodeLabel from './node-label'
+import TreeNode from './TreeNode'
 
 export const baseComponents = {
   Tags,
@@ -16,6 +17,7 @@ export const baseComponents = {
   Radio,
   IconToggleTreeNode,
   NodeLabel,
+  TreeNode,
 }
 
 export const components = customComponents => ({

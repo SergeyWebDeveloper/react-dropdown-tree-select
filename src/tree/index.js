@@ -2,7 +2,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import TreeNode from '../tree-node'
+import WrapperTreeNode from '../wrapper-tree-node'
 
 const shouldRenderNode = (node, searchModeOn, data) => {
   if (searchModeOn || node.expanded) return true
@@ -33,6 +33,7 @@ class Tree extends Component {
     Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -97,12 +98,13 @@ class Tree extends Component {
       Radio,
       IconToggleTreeNode,
       NodeLabel,
+      TreeNode,
     } = props
     const items = []
     data.forEach(node => {
       if (shouldRenderNode(node, searchModeOn, data)) {
         items.push(
-          <TreeNode
+          <WrapperTreeNode
             keepTreeOnSearch={keepTreeOnSearch}
             keepChildrenOnSearch={keepChildrenOnSearch}
             key={node._id}
@@ -121,6 +123,7 @@ class Tree extends Component {
             Radio={Radio}
             IconToggleTreeNode={IconToggleTreeNode}
             NodeLabel={NodeLabel}
+            TreeNode={TreeNode}
           />
         )
       }
