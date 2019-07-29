@@ -3,10 +3,11 @@ import React from 'react'
 import test from 'ava'
 import toJson from 'enzyme-to-json'
 
-import Checkbox, { refUpdater } from './index'
+import Checkbox from './index'
+import { refUpdater } from '../../tree-node'
 
 test('Checkbox component', t => {
-  const tree = toJson(shallow(<Checkbox className="sample" />))
+  const tree = toJson(shallow(<Checkbox className="sample" name={'test'} />))
   t.snapshot(tree)
 })
 
@@ -23,6 +24,6 @@ test('renders checked state', t => {
 })
 
 test('renders disabled state', t => {
-  const tree = toJson(shallow(<Checkbox disabled />))
+  const tree = toJson(shallow(<Checkbox disabled name={'test'} />))
   t.snapshot(tree)
 })

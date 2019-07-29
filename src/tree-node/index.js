@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react'
 
 import { getDataset, isEmpty } from '../utils'
 import Actions from './actions'
-import NodeLabel from './node-label'
 import Toggle from './toggle'
 
 import styles from './index.css'
@@ -12,6 +11,13 @@ import styles from './index.css'
 const cx = cn.bind(styles)
 
 const isLeaf = children => isEmpty(children)
+
+export const refUpdater = ({ checked = false, indeterminate = false }) => input => {
+  if (input) {
+    input.checked = checked
+    input.indeterminate = indeterminate
+  }
+}
 
 const getNodeCx = props => {
   const {
@@ -73,6 +79,10 @@ class TreeNode extends PureComponent {
     showPartiallySelected: PropTypes.bool,
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
+    Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   getAriaAttributes = () => {
@@ -88,6 +98,21 @@ class TreeNode extends PureComponent {
       attributes['aria-expanded'] = _children && (expanded ? 'true' : 'false')
     }
     return attributes
+  }
+
+  handleCheckboxChange = e => {
+    const { mode, _id: id, onCheckboxChange } = this.props
+
+    if (mode === 'simpleSelect' || mode === 'radioSelect') {
+      onCheckboxChange(id, true)
+    } else {
+      const {
+        target: { checked },
+      } = e
+      onCheckboxChange(id, checked)
+    }
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
   }
 
   render() {
@@ -109,33 +134,66 @@ class TreeNode extends PureComponent {
       onAction,
       searchModeOn,
       onNodeToggle,
-      onCheckboxChange,
       showPartiallySelected,
       readOnly,
       clientId,
+      Checkbox,
+      Radio,
+      IconToggleTreeNode,
+      NodeLabel,
     } = this.props
     const liCx = getNodeCx(this.props)
     const style = keepTreeOnSearch || !searchModeOn ? { paddingLeft: `${(_depth || 0) * 20}px` } : {}
 
     const liId = `${_id}_li`
 
+    const sharedProps = { id: _id, value, checked, disabled: disabled || readOnly, readOnly, tabIndex: -1 }
+    const indeterminate = showPartiallySelected && partial
+    const nodeLabelProps = { className: 'node-label' }
+
+    // in case of simple select mode, there is no checkbox, so we need to handle the click via the node label
+    // but not if the control is in readOnly or disabled state
+    const shouldRegisterClickHandler = mode === 'simpleSelect' && !readOnly && !disabled
+
+    if (shouldRegisterClickHandler) {
+      nodeLabelProps.onClick = this.handleCheckboxChange
+    }
     return (
       <li className={liCx} style={style} id={liId} {...getDataset(dataset)} {...this.getAriaAttributes()}>
-        <Toggle isLeaf={isLeaf(_children)} expanded={expanded} id={_id} onNodeToggle={onNodeToggle} />
+        <Toggle
+          isLeaf={isLeaf(_children)}
+          expanded={expanded}
+          id={_id}
+          onNodeToggle={onNodeToggle}
+          IconToggleTreeNode={IconToggleTreeNode}
+        />
         <NodeLabel
+          id={_id}
           title={title}
           label={label}
-          id={_id}
-          partial={partial}
-          checked={checked}
+          nodeLabelProps={nodeLabelProps}
           value={value}
-          disabled={disabled}
-          mode={mode}
-          onCheckboxChange={onCheckboxChange}
-          showPartiallySelected={showPartiallySelected}
-          readOnly={readOnly}
-          clientId={clientId}
-        />
+          expanded={expanded}
+        >
+          {mode === 'radioSelect' ? (
+            <Radio
+              name={clientId}
+              className="radio-item"
+              onChange={this.handleCheckboxChange}
+              onRef={refUpdater({ checked })}
+              {...sharedProps}
+            />
+          ) : (
+            <Checkbox
+              name={_id}
+              className={cx('checkbox-item', { 'simple-select': mode === 'simpleSelect' })}
+              indeterminate={indeterminate}
+              onChange={this.handleCheckboxChange}
+              onRef={refUpdater({ checked, indeterminate })}
+              {...sharedProps}
+            />
+          )}
+        </NodeLabel>
         <Actions actions={actions} onAction={onAction} id={_id} readOnly={readOnly} />
       </li>
     )

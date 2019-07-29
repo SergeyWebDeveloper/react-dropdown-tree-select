@@ -1,5 +1,5 @@
 import nodeVisitor from './nodeVisitor'
-import { getTagId } from '../tag'
+import { getTagId } from '../wrapper-tag'
 
 const Keys = {
   Up: 'ArrowUp',

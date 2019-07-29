@@ -1,5 +1,5 @@
-import Control, { controlComponentDefaultProps } from '../control'
-import withTypeControl from '../hoc/withTypeControl'
+import Control, { controlComponentDefaultProps } from '../../control'
+import withTypeControl from '../../hoc/withTypeControl'
 
 const Radio = withTypeControl(Control, 'radio')
 

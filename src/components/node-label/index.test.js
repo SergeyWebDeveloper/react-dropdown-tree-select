@@ -4,7 +4,7 @@ import React from 'react'
 import test from 'ava'
 import toJson from 'enzyme-to-json'
 
-import NodeLabel from './node-label'
+import NodeLabel from './index'
 
 const mockEvent = {
   target: { checked: true },

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { isOutsideClick, clientIdGenerator } from './utils'
-import Input from './input'
+import WrapperInput from './wrapper-input'
 import Trigger from './trigger'
 import Tree from './tree'
 import TreeManager from './tree-manager'
@@ -286,6 +286,8 @@ class DropdownTreeSelect extends Component {
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
 
+    const { Input, Tag, TagDeleteIcon, Tags, Checkbox, Radio, IconToggleTreeNode, NodeLabel } = this.components
+
     return (
       <div
         id={this.clientId}
@@ -302,7 +304,7 @@ class DropdownTreeSelect extends Component {
           )}
         >
           <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={listTags}>
-            <Input
+            <WrapperInput
               inputRef={el => {
                 this.searchInput = el
               }}
@@ -312,6 +314,10 @@ class DropdownTreeSelect extends Component {
               onBlur={this.onInputBlur}
               onTagRemove={this.onTagRemove}
               onKeyDown={this.onKeyboardKeyDown}
+              Input={Input}
+              Tag={Tag}
+              Tags={Tags}
+              TagDeleteIcon={TagDeleteIcon}
               {...commonProps}
             />
           </Trigger>
@@ -330,6 +336,10 @@ class DropdownTreeSelect extends Component {
                   onNodeToggle={this.onNodeToggle}
                   mode={mode}
                   showPartiallySelected={this.props.showPartiallySelected}
+                  Checkbox={Checkbox}
+                  Radio={Radio}
+                  IconToggleTreeNode={IconToggleTreeNode}
+                  NodeLabel={NodeLabel}
                   {...commonProps}
                 />
               )}

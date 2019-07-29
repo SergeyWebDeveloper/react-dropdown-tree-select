@@ -29,6 +29,10 @@ class Tree extends Component {
     readOnly: PropTypes.bool,
     clientId: PropTypes.string,
     activeDescendant: PropTypes.string,
+    Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -89,6 +93,10 @@ class Tree extends Component {
       onNodeToggle,
       activeDescendant,
       clientId,
+      Checkbox,
+      Radio,
+      IconToggleTreeNode,
+      NodeLabel,
     } = props
     const items = []
     data.forEach(node => {
@@ -109,6 +117,10 @@ class Tree extends Component {
             readOnly={readOnly}
             clientId={clientId}
             activeDescendant={activeDescendant}
+            Checkbox={Checkbox}
+            Radio={Radio}
+            IconToggleTreeNode={IconToggleTreeNode}
+            NodeLabel={NodeLabel}
           />
         )
       }

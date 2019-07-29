@@ -3,41 +3,17 @@ import PropTypes from 'prop-types'
 
 class Tag extends PureComponent {
   static defaultProps = {
-    tagId: PropTypes.string,
+    tagProps: PropTypes.object,
+    buttonProps: PropTypes.object,
     label: PropTypes.string,
-    labelRemove: PropTypes.string,
-    className: PropTypes.string,
-    buttonId: PropTypes.string,
-    isDisabled: PropTypes.bool,
     TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
   render() {
-    const {
-      tagId,
-      label,
-      buttonId,
-      isDisabled,
-      labelRemove,
-      className,
-      TagDeleteIcon,
-      onClick,
-      onKeyDown,
-      onKeyUp,
-    } = this.props
+    const { tagProps, buttonProps, label, TagDeleteIcon } = this.props
     return (
-      <span className={'tag'} id={tagId} aria-label={label}>
+      <span {...tagProps}>
         {label}
-        <TagDeleteIcon
-          id={buttonId}
-          onClick={onClick}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          className={className}
-          type="button"
-          aria-label={labelRemove}
-          aria-labelledby={`${buttonId} ${tagId}`}
-          aria-disabled={isDisabled}
-        />
+        <TagDeleteIcon {...buttonProps} />
       </span>
     )
   }
