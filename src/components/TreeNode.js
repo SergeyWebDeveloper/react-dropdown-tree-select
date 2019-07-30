@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TreeNode = ({ children, ...other }) => <li {...other}>{children}</li>
+const TreeNode = ({ children, treeNodeProps, ...other }) => <li {...other}>{children}</li>
 
 TreeNode.propTypes = {
   id: PropTypes.string,
-  idNode: PropTypes.string,
+  label: PropTypes.string,
   role: PropTypes.string,
-  onNodeToggle: PropTypes.func,
-  'aria-checked': PropTypes.bool,
-  'aria-disabled': PropTypes.bool,
-  'aria-expanded': PropTypes.bool,
-  'aria-level': PropTypes.number,
+  dataSet: PropTypes.object,
+  ariaAttributes: PropTypes.object,
+  treeNodeProps: PropTypes.shape({
+    idNode: PropTypes.string,
+    isParent: PropTypes.bool,
+    searchModeOn: PropTypes.bool,
+    onNodeToggle: PropTypes.func,
+  }),
 }
 
 export default React.memo(TreeNode)

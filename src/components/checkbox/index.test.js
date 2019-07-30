@@ -4,7 +4,7 @@ import test from 'ava'
 import toJson from 'enzyme-to-json'
 
 import Checkbox from './index'
-import { refUpdater } from '../../tree-node'
+import { refUpdater } from '../../wrapper-tree-node'
 
 test('Checkbox component', t => {
   const tree = toJson(shallow(<Checkbox className="sample" name={'test'} />))

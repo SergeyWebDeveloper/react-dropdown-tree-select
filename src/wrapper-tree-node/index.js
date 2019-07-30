@@ -164,11 +164,16 @@ class WrapperTreeNode extends PureComponent {
       <TreeNode
         className={liCx}
         style={style}
-        idNode={_id}
         id={liId}
+        label={label}
+        treeNodeProps={{
+          onNodeToggle,
+          searchModeOn,
+          idNode: _id,
+          isParent: !isLeaf(_children),
+        }}
         {...getDataset(dataset)}
         {...this.getAriaAttributes()}
-        onNodeToggle={onNodeToggle}
       >
         <Toggle
           isLeaf={isLeaf(_children)}

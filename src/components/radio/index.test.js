@@ -4,7 +4,7 @@ import test from 'ava'
 import toJson from 'enzyme-to-json'
 
 import RadioButton from './index'
-import { refUpdater } from '../../tree-node'
+import { refUpdater } from '../../wrapper-tree-node'
 
 test('Radio component', t => {
   const input = toJson(shallow(<RadioButton className="sample" name="sample" />))
