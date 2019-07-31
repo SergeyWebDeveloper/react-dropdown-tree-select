@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cn from 'classnames/bind'
 
 import { getAriaLabel } from '../a11y'
-import { getTagId } from '../tag'
+import { getTagId } from '../wrapper-tag'
 
 import styles from '../index.css'
 

@@ -1,10 +1,16 @@
 import React, { PureComponent } from 'react'
+import MUICheckbox from '@material-ui/core/Checkbox'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Typography from '@material-ui/core/Typography'
 
 import Checkbox from './Checkbox'
 import DropdownTreeSelect from '../../../../src'
 
 import './index.css'
-import data from './data.json'
+import data from '../BigData/big-data.json'
 
 class WithOptions extends PureComponent {
   constructor(props) {
@@ -124,10 +130,57 @@ class WithOptions extends PureComponent {
             readOnly={readOnly}
             showDropdown={showDropdown}
             texts={{ label: 'Demo Dropdown' }}
+            components={{
+              Checkbox: CustomCheckbox,
+              TreeNode,
+            }}
           />
         </div>
       </div>
     )
   }
 }
+
 export default WithOptions
+
+class CustomCheckbox extends React.PureComponent {
+  render() {
+    const { onRef, checked = false, ...other } = this.props
+    return <MUICheckbox inputRef={onRef} checked={checked} {...other} />
+  }
+}
+
+class TreeNode extends React.PureComponent {
+  render() {
+    const { isParent, searchModeOn } = this.props.treeNodeProps
+    return isParent && !searchModeOn ? this.renderParent() : this.renderLeaf()
+  }
+
+  renderLeaf = () => {
+    return (
+      <ExpansionPanelDetails className={'expansionPanel'} style={{ ...this.props.style }}>
+        {this.props.children}
+      </ExpansionPanelDetails>
+    )
+  }
+
+  renderParent = () => {
+    return (
+      <ExpansionPanel
+        className={`${this.props.className} expansionPanel`}
+        style={{ margin: '0', padding: `0 ${this.props['aria-level'] * 5}px` }}
+        onChange={this.handleNodeToggle}
+        expanded={this.props['aria-expanded']}
+      >
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography style={this.props.style}>{this.props.label}</Typography>
+        </ExpansionPanelSummary>
+      </ExpansionPanel>
+    )
+  }
+
+  handleNodeToggle = () => {
+    const { idNode, onNodeToggle } = this.props.treeNodeProps
+    onNodeToggle(idNode)
+  }
+}

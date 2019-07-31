@@ -7,8 +7,8 @@ import toJson from 'enzyme-to-json'
 import Input from './index'
 
 test('renders tags', t => {
-  const tags = [{ _id: 'i1', label: 'l1' }, { _id: 'i2', label: 'l2' }]
-  const wrapper = toJson(shallow(<Input tags={tags} />))
+  const listTags = [{ _id: 'i1', label: 'l1' }, { _id: 'i2', label: 'l2' }]
+  const wrapper = toJson(shallow(<Input listTags={listTags} />))
   t.snapshot(wrapper)
 })
 
@@ -31,7 +31,7 @@ test('raises onchange', t => {
 })
 
 test('should render data attributes', t => {
-  const tags = [
+  const listTags = [
     {
       _id: 'i1',
       label: 'l1',
@@ -43,7 +43,7 @@ test('should render data attributes', t => {
     },
   ]
 
-  const wrapper = toJson(shallow(<Input tags={tags} />))
+  const wrapper = toJson(shallow(<Input listTags={listTags} />))
 
   t.snapshot(wrapper)
 })

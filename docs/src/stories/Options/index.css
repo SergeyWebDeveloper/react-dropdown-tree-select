@@ -17,3 +17,39 @@
 .node .fa-ban {
   color: darkorange;
 }
+
+.expansionPanel .node-label {
+  display: block;
+}
+
+.expansionPanel > label {
+  display: flex;
+  align-items: center;
+}
+
+.infinite-scroll-component .expansionPanel {
+  padding: 10px;
+  margin: 0;
+}
+
+.expansionPanel.node {
+  box-shadow: none;
+}
+
+.expansionPanel.node:before {
+  display: none;
+}
+
+.expansionPanel.node > div:first-child {
+  position: relative;
+}
+
+.expansionPanel.node > div:first-child:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ccc;
+}

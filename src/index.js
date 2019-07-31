@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { isOutsideClick, clientIdGenerator } from './utils'
-import Input from './input'
+import WrapperInput from './wrapper-input'
 import Trigger from './trigger'
 import Tree from './tree'
 import TreeManager from './tree-manager'
@@ -19,6 +19,7 @@ import keyboardNavigation from './tree-manager/keyboardNavigation'
 
 import styles from './index.css'
 import { getAriaLabel } from './a11y'
+import { components } from './components'
 
 const cx = cn.bind(styles)
 
@@ -50,6 +51,18 @@ class DropdownTreeSelect extends Component {
     searchPredicate: PropTypes.func,
     keyLabel: PropTypes.string,
     keyValue: PropTypes.string,
+    components: PropTypes.shape({
+      Input: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tags: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TagsContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    }),
   }
 
   static defaultProps = {
@@ -67,7 +80,9 @@ class DropdownTreeSelect extends Component {
     this.state = {
       searchModeOn: false,
       currentFocus: undefined,
+      tags: [],
     }
+    this.components = components(this.props.components)
     this.clientId = props.id || clientIdGenerator.get(this)
   }
 
@@ -285,11 +300,24 @@ class DropdownTreeSelect extends Component {
 
   render() {
     const { disabled, readOnly, mode, texts } = this.props
-    const { showDropdown, currentFocus, tags } = this.state
+    const { showDropdown, currentFocus, tags: listTags } = this.state
 
     const activeDescendant = currentFocus ? `${currentFocus}_li` : undefined
 
     const commonProps = { disabled, readOnly, activeDescendant, texts, mode, clientId: this.clientId }
+
+    const {
+      Input,
+      Tag,
+      TagDeleteIcon,
+      Tags,
+      Checkbox,
+      Radio,
+      IconToggleTreeNode,
+      NodeLabel,
+      TreeNode,
+      TagsContainer,
+    } = this.components
 
     return (
       <div
@@ -306,17 +334,22 @@ class DropdownTreeSelect extends Component {
             { 'radio-select': mode === 'radioSelect' }
           )}
         >
-          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={tags}>
-            <Input
+          <Trigger onTrigger={this.onTrigger} showDropdown={showDropdown} {...commonProps} tags={listTags}>
+            <WrapperInput
               inputRef={el => {
                 this.searchInput = el
               }}
-              tags={tags}
+              listTags={listTags}
               onInputChange={this.onInputChange}
               onFocus={this.onInputFocus}
               onBlur={this.onInputBlur}
               onTagRemove={this.onTagRemove}
               onKeyDown={this.onKeyboardKeyDown}
+              Input={Input}
+              Tag={Tag}
+              Tags={Tags}
+              TagDeleteIcon={TagDeleteIcon}
+              TagsContainer={TagsContainer}
               {...commonProps}
             />
           </Trigger>
@@ -335,6 +368,11 @@ class DropdownTreeSelect extends Component {
                   onNodeToggle={this.onNodeToggle}
                   mode={mode}
                   showPartiallySelected={this.props.showPartiallySelected}
+                  Checkbox={Checkbox}
+                  Radio={Radio}
+                  IconToggleTreeNode={IconToggleTreeNode}
+                  NodeLabel={NodeLabel}
+                  TreeNode={TreeNode}
                   {...commonProps}
                 />
               )}

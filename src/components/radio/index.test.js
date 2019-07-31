@@ -3,7 +3,8 @@ import React from 'react'
 import test from 'ava'
 import toJson from 'enzyme-to-json'
 
-import RadioButton, { refUpdater } from './index'
+import RadioButton from './index'
+import { refUpdater } from '../../wrapper-tree-node'
 
 test('Radio component', t => {
   const input = toJson(shallow(<RadioButton className="sample" name="sample" />))

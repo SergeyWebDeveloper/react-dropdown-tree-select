@@ -8,7 +8,7 @@ const cx = cn.bind(styles)
 
 export const getTagId = id => `${id}_tag`
 
-class Tag extends PureComponent {
+class WrapperTag extends PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
@@ -16,6 +16,8 @@ class Tag extends PureComponent {
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
     labelRemove: PropTypes.string,
+    Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   handleClick = e => {
@@ -40,32 +42,35 @@ class Tag extends PureComponent {
   }
 
   render() {
-    const { id, label, labelRemove = 'Remove', readOnly, disabled } = this.props
+    const { id, label, labelRemove = 'Remove', readOnly, disabled, Tag, TagDeleteIcon } = this.props
 
     const tagId = getTagId(id)
     const buttonId = `${id}_button`
     const className = cx('tag-remove', { readOnly }, { disabled })
     const isDisabled = readOnly || disabled
-
     return (
-      <span className={cx('tag')} id={tagId} aria-label={label}>
-        {label}
-        <button
-          id={buttonId}
-          onClick={!isDisabled ? this.handleClick : undefined}
-          onKeyDown={!isDisabled ? this.onKeyDown : undefined}
-          onKeyUp={!isDisabled ? this.onKeyUp : undefined}
-          className={className}
-          type="button"
-          aria-label={labelRemove}
-          aria-labelledby={`${buttonId} ${tagId}`}
-          aria-disabled={isDisabled}
-        >
-          x
-        </button>
-      </span>
+      <Tag
+        tagProps={{
+          className: 'tag',
+          id: tagId,
+          'aria-label': label,
+        }}
+        buttonProps={{
+          className,
+          id: buttonId,
+          onClick: !isDisabled ? this.handleClick : undefined,
+          onKeyDown: !isDisabled ? this.onKeyDown : undefined,
+          onKeyUp: !isDisabled ? this.onKeyUp : undefined,
+          type: 'button',
+          'aria-label': labelRemove,
+          'aria-labelledby': `${buttonId} ${tagId}`,
+          'aria-disabled': isDisabled,
+        }}
+        label={label}
+        TagDeleteIcon={TagDeleteIcon}
+      />
     )
   }
 }
 
-export default Tag
+export default WrapperTag
