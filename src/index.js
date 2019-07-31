@@ -49,6 +49,18 @@ class DropdownTreeSelect extends Component {
     readOnly: PropTypes.bool,
     id: PropTypes.string,
     searchPredicate: PropTypes.func,
+    components: PropTypes.shape({
+      Input: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Tags: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Checkbox: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      Radio: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      IconToggleTreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      NodeLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TreeNode: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      TagsContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    }),
   }
 
   static defaultProps = {
@@ -296,6 +308,7 @@ class DropdownTreeSelect extends Component {
       IconToggleTreeNode,
       NodeLabel,
       TreeNode,
+      TagsContainer,
     } = this.components
 
     return (
@@ -328,6 +341,7 @@ class DropdownTreeSelect extends Component {
               Tag={Tag}
               Tags={Tags}
               TagDeleteIcon={TagDeleteIcon}
+              TagsContainer={TagsContainer}
               {...commonProps}
             />
           </Trigger>

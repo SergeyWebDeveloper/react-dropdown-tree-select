@@ -24,6 +24,7 @@ class WrapperInput extends PureComponent {
     Tag: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     Tags: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     TagDeleteIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    TagsContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   constructor(props) {
@@ -52,10 +53,11 @@ class WrapperInput extends PureComponent {
       Tag,
       Tags,
       TagDeleteIcon,
+      TagsContainer,
     } = this.props
 
     return (
-      <ul className={cx('tag-list')}>
+      <TagsContainer>
         <Tags
           listTags={listTags}
           onDelete={onTagRemove}
@@ -80,7 +82,7 @@ class WrapperInput extends PureComponent {
           aria-autocomplete={onKeyDown ? 'list' : undefined}
           {...getAriaLabel(texts.label)}
         />
-      </ul>
+      </TagsContainer>
     )
   }
 }

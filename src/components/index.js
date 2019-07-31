@@ -7,6 +7,7 @@ import Radio from './radio'
 import IconToggleTreeNode from './IconToggleTreeNode'
 import NodeLabel from './node-label'
 import TreeNode from './TreeNode'
+import TagsContainer from './TagsContainer'
 
 export const baseComponents = {
   Tags,
@@ -18,6 +19,7 @@ export const baseComponents = {
   IconToggleTreeNode,
   NodeLabel,
   TreeNode,
+  TagsContainer,
 }
 
 export const components = customComponents => ({

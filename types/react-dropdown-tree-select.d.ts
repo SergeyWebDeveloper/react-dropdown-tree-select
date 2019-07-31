@@ -8,6 +8,19 @@ declare module 'react-dropdown-tree-select' {
 
   export type ShowDropdownState = 'default' | 'initial' | 'always'
 
+  export interface IDropdownTreeSelectComponents {
+    Input: React.ComponentType
+    Tag: React.ComponentType
+    TagDeleteIcon: React.ComponentType
+    Tags: React.ComponentType
+    Checkbox: React.ComponentType
+    Radio: React.ComponentType
+    IconToggleTreeNode: React.ComponentType
+    NodeLabel: React.ComponentType
+    TreeNode: React.ComponentType
+    TagsContainer: React.ComponentType
+  }
+
   export interface DropdownTreeSelectProps {
     data: TreeData
     /** Clear the input search if a node has been selected/unselected */
@@ -97,6 +110,10 @@ declare module 'react-dropdown-tree-select' {
     id?: string
     /** Optional search predicate to override the default case insensitive contains match on node labels. */
     searchPredicate?: (currentNode: TreeNode, searchTerm: string) => boolean
+    /**
+     * Custom components
+     */
+    components?: Partial<IDropdownTreeSelectComponents>
   }
 
   export interface DropdownTreeSelectState {
